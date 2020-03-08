@@ -8,7 +8,8 @@ from imgui.integrations.pygame import PygameRenderer
 import imgui
 import main_frame
 from main_frame import init
-
+import time
+import math
 
 def menubar():
     if imgui.begin_main_menu_bar():
@@ -24,7 +25,7 @@ def menubar():
         if imgui.begin_menu("About", True):
 
             clicked_about, _ = imgui.menu_item(
-                "About me..", 'F1', False, True
+                "About me..", 'F1', True, True
             )
 
             if clicked_about:
@@ -35,11 +36,21 @@ def menubar():
 
 class simple_window1:
     def __call__(self):
-        _, show = imgui.begin("Custom window1", True)
+        _, show = imgui.begin("LOL", True)
         if not show:
             main_frame.s1 = False
-        imgui.text("BarBarBar")
-        imgui.text_colored("Eggs", 1., 0.1, 0.2)
+        imgui.text("BarBar")
+        imgui.text_colored("Eggs", 0.7, 0.4, 0.2)
+        imgui.end()
+
+class simple_window2:
+    def __call__(self):
+        _, show = imgui.begin("ROFL", True)
+        if not show:
+            main_frame.s1 = False
+        imgui.text("BarB.B")
+        imgui.text(str(math.fabs(math.sin(time.time()))))
+        imgui.text_colored("Egg", 1., 0.1, 0.2)
         imgui.end()
 
 class MainFrame:
@@ -53,6 +64,8 @@ class MainFrame:
         imgui.new_frame()
         if main_frame.s1:
             simple_window1()()
+            simple_window2()()
+            menubar()
 
 
 def draw(s, impl):
@@ -60,7 +73,9 @@ def draw(s, impl):
 
     # note: cannot use screen.fill((1, 1, 1)) because pygame's screen
     #       does not support fill() on OpenGL sufraces
-    gl.glClearColor(0.3, 0.4, 0.4, 1)
+    x = math.fabs(math.sin(time.time()))
+    y = math.fabs(math.cos(time.time()))
+    gl.glClearColor(x, y, x, 1)
     gl.glClear(gl.GL_COLOR_BUFFER_BIT)
     imgui.render()
     impl.render(imgui.get_draw_data())

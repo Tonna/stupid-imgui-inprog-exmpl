@@ -6,14 +6,14 @@ s1 = True
 
 def init():
     global show_about
-    show_about = False
+    show_about = True
     pygame.init()
-    size = 500, 400
+    size = 500, 500
 
     screen = pygame.display.set_mode(size, pygame.DOUBLEBUF
                                      | pygame.OPENGL
                                      )
-    pygame.display.set_caption("Title restarts only on change main")
+    pygame.display.set_caption("Mom get the camera! I'm metaprogramming!!!")
 
     imgui.create_context()
     impl = PygameRenderer()
